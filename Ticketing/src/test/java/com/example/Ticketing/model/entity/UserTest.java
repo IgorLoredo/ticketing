@@ -1,5 +1,6 @@
-package com.example.Ticketing.Model.Entity;
+package com.example.Ticketing.model.entity;
 
+import com.example.Ticketing.Model.Entity.User;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;

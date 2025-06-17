@@ -1,5 +1,6 @@
-package com.example.Ticketing.Model.Entity;
+package com.example.Ticketing.model.entity;
 
+import com.example.Ticketing.Model.Entity.Product;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
