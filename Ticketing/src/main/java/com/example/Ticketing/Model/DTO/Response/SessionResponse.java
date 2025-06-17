@@ -1,26 +1,42 @@
 package com.example.Ticketing.Model.DTO.Response;
 
-import com.example.Ticketing.Model.Enum.SeatType;
-import lombok.AllArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Data
 public class SessionResponse {
+
+    @Schema(description = "Unique identifier of the session", example = "1")
     private Long id;
+
+    @Schema(description = "Name of the session", example = "Avengers Screening")
     private String name;
+
+    @Schema(description = "Date and time the session starts", example = "2025-06-20T19:00:00")
     private LocalDateTime startTime;
+
+    @Schema(description = "Timestamp of session creation", example = "2025-06-10T10:30:00")
     private LocalDateTime createdAt;
+
+    @Schema(description = "Total number of seats for the session", example = "100")
     private int totalSeats;
+
+    @Schema(description = "Number of seats still available", example = "85")
     private int availableSeats;
 
-
+    @Schema(description = "Price of a single seat", example = "25.00")
     private BigDecimal seatPrice;
+
+    @Schema(description = "Timestamp of last update", example = "2025-06-12T14:45:00")
     private LocalDateTime updatedAt;
+
+    @Schema(description = "ID of the event associated with this session", example = "1")
     private Long eventId;
+
+    @Schema(description = "Name of the event associated with this session", example = "Cinema Night")
     private String eventName;
 
     public SessionResponse(Long id, String name, LocalDateTime startTime, LocalDateTime createdAt, LocalDateTime updatedAt, int totalSeats, int availableSeats, BigDecimal seatPrice, Long eventId, String eventName) {
@@ -34,6 +50,10 @@ public class SessionResponse {
         this.updatedAt = updatedAt;
         this.eventId = eventId;
         this.eventName = eventName;
+    }
+
+    public SessionResponse(int availableSeats) {
+        this.availableSeats = availableSeats;
     }
 
     public int getTotalSeats() {
@@ -59,6 +79,7 @@ public class SessionResponse {
     public void setSeatPrice(BigDecimal seatPrice) {
         this.seatPrice = seatPrice;
     }
+
     public Long getId() {
         return id;
     }
@@ -114,8 +135,4 @@ public class SessionResponse {
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
-    public SessionResponse(int availableSeats) {
-        this.availableSeats = availableSeats;
-    }
-
 }

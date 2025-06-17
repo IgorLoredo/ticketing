@@ -1,5 +1,6 @@
 package com.example.Ticketing.Model.DTO.Response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,10 +8,15 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@Schema(description = "Response object representing a product")
 public class ProductResponse {
-
+    @Schema(description = "Product ID", example = "1")
     private Long id;
+
+    @Schema(description = "Product name", example = "Soda")
     private String name;
+
+    @Schema(description = "Product price", example = "5.50")
     private BigDecimal price;
 
     public Long getId() {

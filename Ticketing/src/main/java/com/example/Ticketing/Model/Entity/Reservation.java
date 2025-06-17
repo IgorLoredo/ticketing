@@ -3,6 +3,7 @@ package com.example.Ticketing.Model.Entity;
 import com.example.Ticketing.Model.Enum.ReservationStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -40,6 +41,17 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status = ReservationStatus.ACTIVE;
+
+//    @NotNull
+    private LocalDateTime expirationTime; // Tempo de expiração da reserva
+
+    public LocalDateTime getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(LocalDateTime expirationTime) {
+        this.expirationTime = expirationTime;
+    }
 
     public Long getId() {
         return id;

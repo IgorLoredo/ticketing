@@ -1,17 +1,15 @@
 package com.example.Ticketing.Model.Entity;
 
 
-import com.example.Ticketing.Model.Enum.SeatStatus;
-import com.example.Ticketing.Model.Enum.SeatType;
+
 import jakarta.persistence.*;
-import jakarta.persistence.CascadeType;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+
 
 
 @Entity

@@ -1,5 +1,6 @@
 package com.example.Ticketing.Model.DTO.Request;
 
+import com.example.Ticketing.Model.Enum.PaymentMethod;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -8,16 +9,39 @@ import java.util.List;
 
 @Data
 public class PaymentRequest {
-    @NotNull(message = "Reservation ID is required")
-    @Positive(message = "Reservation ID must be positive")
+
+
+    @NotNull
     private Long reservationId;
 
-    @NotBlank(message = "Payment token is required")
-    private String paymentToken;
+    @NotNull
+    private PaymentMethod method;
 
-//    @Schema(description = "List of additional product IDs")
-    private List<Long> productIds;
+    @NotBlank
+    private String paymentToken; // Token do gateway de pagamento
 
-    // Not included in request body - set from header
-    private String idempotencyKey;
+    // IdempotencyKey vem do header, não do body
+    public Long getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public PaymentMethod getMethod() {
+        return method;
+    }
+
+    public void setMethod(PaymentMethod method) {
+        this.method = method;
+    }
+
+    public String getPaymentToken() {
+        return paymentToken;
+    }
+
+    public void setPaymentToken(String paymentToken) {
+        this.paymentToken = paymentToken;
+    }
 }

@@ -1,11 +1,19 @@
 package com.example.Ticketing.Model.DTO.Response;
 
 import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
+@Schema(description = "Response object representing a user")
 public class UserResponse {
+
+    @Schema(description = "User's unique identifier", example = "1")
     private Long id;
+
+    @Schema(description = "User's full name", example = "John Doe")
     private String name;
+
+    @Schema(description = "User's email address", example = "john@example.com")
     private String email;
 
     public UserResponse(Long id, String name, String email) {
@@ -13,8 +21,6 @@ public class UserResponse {
         this.name = name;
         this.email = email;
     }
-
-
 
     public Long getId() {
         return id;
