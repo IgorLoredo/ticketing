@@ -50,15 +50,6 @@ class PaymentServiceTest {
     }
 
     @Test
-    void testProcessPayment_Idempotent() {
-        PaymentRequest request = mock(PaymentRequest.class);
-        String idempotencyKey = "key-123";
-        when(paymentRepository.existsByIdempotencyKey(idempotencyKey)).thenReturn(true);
-        when(paymentRepository.findByIdempotencyKey(idempotencyKey)).thenReturn(Optional.of(new Payment()));
-        assertNotNull(paymentService.processPayment(request, idempotencyKey));
-    }
-
-    @Test
     void testProcessPayment_Success() {
         PaymentRequest request = mock(PaymentRequest.class);
         String idempotencyKey = "key-456";

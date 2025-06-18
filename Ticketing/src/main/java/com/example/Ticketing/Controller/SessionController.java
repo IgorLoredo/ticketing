@@ -28,7 +28,7 @@ public class SessionController {
     @Operation(summary = "Create a new session for an event")
     @PostMapping
     public ResponseEntity<SessionResponse> createSession(
-            @Parameter(description = "ID of the event", required = true)
+            @Parameter(description = "ID of the event", required = true, example = "101")
             @PathVariable Long eventId,
 
             @Valid @RequestBody SessionRequest request) {
@@ -39,10 +39,10 @@ public class SessionController {
     @Operation(summary = "Get details of a specific session")
     @GetMapping("/{sessionId}")
     public ResponseEntity<SessionResponse> getSession(
-            @Parameter(description = "ID of the event", required = true)
+            @Parameter(description = "ID of the event", required = true, example = "101")
             @PathVariable Long eventId,
 
-            @Parameter(description = "ID of the session", required = true)
+            @Parameter(description = "ID of the session", required = true, example = "2001")
             @PathVariable Long sessionId) {
         return ResponseEntity.ok(sessionService.getSessionById(sessionId));
     }
@@ -50,7 +50,7 @@ public class SessionController {
     @Operation(summary = "List all sessions for an event with pagination and sorting")
     @GetMapping
     public ResponseEntity<Page<SessionResponse>> listSessions(
-            @Parameter(description = "ID of the event", required = true)
+            @Parameter(description = "ID of the event", required = true, example = "101")
             @PathVariable Long eventId,
 
             @Parameter(description = "Page number (0-based index)", example = "0")
