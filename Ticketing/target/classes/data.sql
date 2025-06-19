@@ -10,9 +10,9 @@ INSERT INTO Users (id, name, email, CREATED_AT) VALUES
 
 -- SESSIONS
 INSERT INTO Session (id, name, start_Time, created_At, updated_At, event_id, total_Seats, seat_Price, available_Seats) VALUES
-  (1, 'Avengers Screening', '2025-06-20 19:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 100, 25.00, 97),
-  (2, 'Kotlin Workshop', '2025-06-22 09:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2, 50, 120.00, 47),
-  (3, 'Smooth Jazz Night', '2025-06-25 21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3, 80, 60.00, 75);
+  (1, 'Avengers Screening', '2025-08-20 19:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 100, 25.00, 97),
+  (2, 'Kotlin Workshop', '2025-08-22 09:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2, 50, 120.00, 47),
+  (3, 'Smooth Jazz Night', '2025-08-25 21:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3, 80, 60.00, 75);
 
 -- PRODUCTS
 INSERT INTO Product (id, name, price, created_At) VALUES

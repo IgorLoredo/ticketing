@@ -8,9 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.HashMap;
-import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -44,16 +42,50 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-
+    public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        StringBuilder sb = new StringBuilder();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            sb.append(fieldName).append(": ").append(errorMessage).append("; ");
         });
+        ApiError apiError = new ApiError(
+                java.time.LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Validation Error",
+                sb.toString(),
+                request.getRequestURI(),
+                ex.getClass().getSimpleName()
+        );
+        log.warn("Validation errors: {}", apiError);
+        return ResponseEntity.badRequest().body(apiError);
+    }
 
-        log.warn("Validation errors: {}", errors);
-        return ResponseEntity.badRequest().body(errors);
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<ApiError> handleDataIntegrityViolation(org.springframework.dao.DataIntegrityViolationException ex, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                java.time.LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Database Integrity Violation",
+                "Database error: " + (ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage()),
+                request.getRequestURI(),
+                ex.getClass().getSimpleName()
+        );
+        log.error("Database integrity violation: {}", apiError);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
+
+    @ExceptionHandler(jakarta.persistence.PersistenceException.class)
+    public ResponseEntity<ApiError> handlePersistenceException(jakarta.persistence.PersistenceException ex, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                java.time.LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Persistence Error",
+                "Persistence error: " + ex.getMessage(),
+                request.getRequestURI(),
+                ex.getClass().getSimpleName()
+        );
+        log.error("Persistence exception: {}", apiError);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
 }

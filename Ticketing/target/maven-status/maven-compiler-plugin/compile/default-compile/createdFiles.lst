@@ -23,6 +23,7 @@ com\example\Ticketing\Model\Enum\ReservationStatus.class
 com\example\Ticketing\Controller\SessionController.class
 com\example\Ticketing\Repository\ReservationRepository.class
 com\example\Ticketing\Model\Entity\User.class
+com\example\Ticketing\Exception\ApiError.class
 com\example\Ticketing\Model\DTO\Response\ProductResponse.class
 com\example\Ticketing\Controller\ProductController.class
 com\example\Ticketing\Service\PaymentService.class

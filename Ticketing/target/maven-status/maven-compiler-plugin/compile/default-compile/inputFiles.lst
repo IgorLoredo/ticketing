@@ -4,6 +4,7 @@ C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\c
 C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Controller\ReservationController.java
 C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Controller\SessionController.java
 C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Controller\UserController.java
+C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Exception\ApiError.java
 C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Exception\BusinessException.java
 C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Exception\ConcurrencyException.java
 C:\Users\Igor Loredo\Documents\projetos Java\ticketing\Ticketing\src\main\java\com\example\Ticketing\Exception\GlobalExceptionHandler.java
