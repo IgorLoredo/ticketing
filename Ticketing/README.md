@@ -267,3 +267,98 @@ User 1---* Reservation *---1 Session *---1 Event
 - **Session** pertence a um **Event**
 - **Reservation** pode ter muitos **Product** (e vice-versa)
 - **Reservation** tem um **Payment**
+
+## Arquitetura AWS Proposta
+
+### Resumo Explicativo
+
+A arquitetura do sistema de bilhetagem foi desenhada para garantir escalabilidade, segurança, performance e observabilidade, utilizando os seguintes serviços AWS:
+
+- **VPC**: Isolamento de rede para todos os recursos.
+- **ECS (Fargate)**: Execução da aplicação em containers, facilitando deploy e escalabilidade.
+- **RDS**: Banco de dados relacional para persistência das informações do sistema.
+- **Elasticache Redis**: Cache para dados estáticos e de cadastro, acelerando consultas.
+- **S3**: Armazenamento de arquivos, como notas fiscais e relatórios.
+- **CloudFront**: Distribuição de conteúdo estático com baixa latência.
+- **Route 53**: Gerenciamento de DNS.
+- **AWS Shield e WAF**: Proteção contra ataques DDoS e tentativas de fraude.
+- **Cognito**: Autenticação e gerenciamento de usuários.
+- **SQS FIFO**: Fila para processamento assíncrono e ordenado (ex: confirmação de pagamentos).
+- **Lambda**: Funções serverless para integração com sistemas externos e automações.
+- **SES**: Envio de e-mails transacionais (notificações).
+- **CloudWatch, X-Ray, Metrics**: Monitoramento, rastreamento e observabilidade.
+- **Cost Explorer, Savings Plans**: Controle e otimização de custos.
+- **Secrets Manager**: Gerenciamento seguro de segredos e credenciais.
+- **DMS, Athena, Glue**: Replicação, ETL e análise de dados.
+- **TTL em reservas**: Expiração automática de pedidos de reserva (ex: 15 minutos).
+
+### Diagrama Mermaid (Revisado)
+
+```mermaid
+flowchart TD
+    subgraph Internet
+        Users[Usuários]
+    end
+    subgraph AWS_Cloud
+        subgraph Edge
+            Route53[Route 53]
+            CloudFront[CloudFront]
+            Shield[Shield]
+            WAF[WAF]
+        end
+        subgraph VPC
+            subgraph AppLayer
+                ECS[ECS Fargate - Ticketing API]
+                Lambda[Lambda - Confirma Pagamento]
+            end
+            subgraph DataLayer
+                RDS[(RDS - Banco de Dados)]
+                Redis[(Elasticache Redis)]
+                S3[(S3 - Notas/Arquivos)]
+            end
+            subgraph Messaging
+                SQS[SQS FIFO]
+            end
+            subgraph Auth
+                Cognito[Cognito]
+            end
+        end
+        subgraph Observability
+            CloudWatch[CloudWatch]
+            XRay[X-Ray]
+            Metrics[Metrics]
+        end
+        subgraph Cost
+            CostExplorer[Cost Explorer]
+            SavingsPlans[Savings Plans]
+        end
+        subgraph Analytics
+            DMS[DMS]
+            Athena[Athena]
+            Glue[Glue]
+        end
+        SES[SES - E-mail]
+        Secrets[Secrets Manager]
+    end
+    Users --> Route53 --> CloudFront --> Shield --> WAF --> ECS
+    ECS -->|Autentica| Cognito
+    ECS -->|Lê/Escreve| RDS
+    ECS -->|Cache| Redis
+    ECS -->|Armazena| S3
+    ECS -->|Fila| SQS
+    ECS -->|Notifica| SES
+    ECS -->|Secrets| Secrets
+    ECS -->|Observa| CloudWatch
+    ECS -->|Observa| XRay
+    ECS -->|Observa| Metrics
+    ECS -->|Custo| CostExplorer
+    ECS -->|Custo| SavingsPlans
+    ECS -->|Replica| DMS
+    DMS --> Athena
+    DMS --> Glue
+    ECS -->|Chama| Lambda
+    Lambda -->|Confirma| SQS
+    S3 -->|Notas fiscais| ECS
+```
+
+> O diagrama acima apresenta as principais camadas e integrações da solução AWS para o sistema de bilhetagem.
