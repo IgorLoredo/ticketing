@@ -1,5 +1,7 @@
 # Decisões de Arquitetura e Desenvolvimento
 
+![Diagrama de Arquitetura AWS](Billheteria.drawio%20(1).png)
+
 ## 1. Visão Geral
 A solução apresentada é uma simplificação da arquitetura ideal para um sistema de bilhetagem. Devido ao tempo disponível, optei por representar toda a lógica em um único monolito, mas utilizando uma arquitetura MVC bem definida. Isso permite, futuramente, adaptar e quebrar o código em microserviços conforme a necessidade, sem grandes refatorações.
 
@@ -60,3 +62,7 @@ A solução apresentada é uma simplificação da arquitetura ideal para um sist
 - Implementar arquitetura data mesh para armazenar e analisar dados dos clientes de forma distribuída.
 - Melhorar a lógica de assentos para evitar overbooking.
 - Adicionar programas de descontos e promoções.
+
+---
+
+Para mais detalhes sobre a solução, consulte também o arquivo principal [`README.md`](./README.md).

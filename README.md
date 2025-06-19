@@ -1,5 +1,7 @@
 # Ticketing
 
+![Diagrama de Arquitetura AWS](Billheteria.drawio%20(1).png)
+
 Sistema de gerenciamento de reservas, pagamentos e produtos para eventos e sessões de cinema/teatro, desenvolvido em Java com Spring Boot.
 
 ## Sobre o Desafio Técnico
@@ -21,7 +23,7 @@ Este projeto foi desenvolvido como solução para o desafio técnico da vaga de 
 - Projeto pronto para deploy em nuvem (AWS), com persistência desacoplada e fácil adaptação para bancos gerenciados
 - Documentação automática da API via Swagger/OpenAPI
 
-Para mais detalhes sobre a arquitetura AWS sugerida, consulte o diagrama e a seção de decisões técnicas ao final deste README.
+Para mais detalhes sobre a arquitetura AWS sugerida, consulte o diagrama acima e a seção de decisões técnicas ao final deste README.
 
 ## Visão Geral
 O Ticketing é uma API RESTful que permite:
@@ -267,3 +269,32 @@ User 1---* Reservation *---1 Session *---1 Event
 - **Session** pertence a um **Event**
 - **Reservation** pode ter muitos **Product** (e vice-versa)
 - **Reservation** tem um **Payment**
+
+## Arquitetura AWS Proposta
+
+### Resumo Explicativo
+
+A arquitetura do sistema de bilhetagem foi desenhada para garantir escalabilidade, segurança, performance e observabilidade, utilizando os seguintes serviços AWS:
+
+- **VPC**: Isolamento de rede para todos os recursos.
+- **ECS (Fargate)**: Execução da aplicação em containers, facilitando deploy e escalabilidade.
+- **RDS**: Banco de dados relacional para persistência das informações do sistema.
+- **Elasticache Redis**: Cache para dados estáticos e de cadastro, acelerando consultas.
+- **S3**: Armazenamento de arquivos, como notas fiscais e relatórios.
+- **CloudFront**: Distribuição de conteúdo estático com baixa latência.
+- **Route 53**: Gerenciamento de DNS.
+- **AWS Shield e WAF**: Proteção contra ataques DDoS e tentativas de fraude.
+- **Cognito**: Autenticação e gerenciamento de usuários.
+- **SQS FIFO**: Fila para processamento assíncrono e ordenado (ex: confirmação de pagamentos).
+- **Lambda**: Funções serverless para integração com sistemas externos e automações.
+- **SES**: Envio de e-mails transacionais (notificações).
+- **CloudWatch, X-Ray, Metrics**: Monitoramento, rastreamento e observabilidade.
+- **Cost Explorer, Savings Plans**: Controle e otimização de custos.
+- **Secrets Manager**: Gerenciamento seguro de segredos e credenciais.
+- **DMS, Athena, Glue**: Replicação, ETL e análise de dados.
+- **TTL em reservas**: Expiração automática de pedidos de reserva (ex: 15 minutos).
+
+---
+
+Para uma explicação detalhada das decisões técnicas e arquiteturais, consulte também o arquivo [`decisoes.md`](./decisoes.md).
+
